@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="{% static 'search/app.css' %}"/>
+    </head>
+
+    <body>
+        <div class="wrapper">
+                <nav class="nav">
+                        <div class="container">
+                            <div class="nav__menu">
+                                <a class="nav__header" href="/">Wiki Search</a>
+                            </div>
+                        </div>
+                </nav>
+            <div class="search">
+                <div class="search__container">
+                    
+                    <form class="search-form" method="POST" action="">
+                        {% csrf_token %}
+                        <input class="search-form__query" type="text" placeholder="Search" name="query" id="query">
+                    </form>
+                </div>
+            </div>
+            <section class="result" >
+                <div class="container">
+                    <div class="movies" id="result">
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+        <script src="{% static 'search/ajax.js' %}"></script>
+    </body>

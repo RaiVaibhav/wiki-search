@@ -1,0 +1,13 @@
+{% if has_result %} 
+    <div class="container">
+        <ul class="list-group">
+        {% for item in search_result %}
+            <li class="list-group-item"><a href="{% url 'details' item %}">{{ item }}</a></li>
+        {% endfor %}
+        </ul>   
+    </div>
+{% else %}
+    <div class="container" style="width: 50%;">
+        <p class="movies__item-title">No results found.</p>
+    </div>
+{% endif %}
