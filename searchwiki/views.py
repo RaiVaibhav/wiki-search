@@ -1,9 +1,12 @@
 from configparser import ConfigParser
 from django.shortcuts import render
-import urllib
-import wikipedia as wikipedia
-import pdfkit
 from django.http import HttpResponse
+
+import urllib
+import wikipedia
+import pdfkit
+
+
 from .models import Pdfbyte
 
 def home(request):
