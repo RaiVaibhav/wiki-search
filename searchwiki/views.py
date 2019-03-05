@@ -1,10 +1,10 @@
 from configparser import ConfigParser
 from django.shortcuts import render
 import urllib
-# import tmdbsimple as tmdb
 import wikipedia as wikipedia
 import pdfkit
 from django.http import HttpResponse
+from .models import Pdfbyte
 
 def home(request):
     return render(request, "base.html")
@@ -12,7 +12,6 @@ def home(request):
 def search_list(request):
     query = str(request.POST.get('search_text', ''))
     if query != '':
-        # search_result = tmdb.Search().movie(query=query)['results']
         try:
             search_result = wikipedia.search(query, results=100)
         except:
@@ -41,8 +40,15 @@ def download(request, string):
         return render(request, "details.html", {"titles":titles, "error":None})
     if flag and 'search' not in request.get_full_path():
         try:
-            pdf = pdfkit.from_url(page.url, False)
             filename=page.title.translate ({ord(c): "" for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).replace(" ", "_")+".pdf"
+            try:
+                pdf_object = Pdfbyte.objects.get(name=filename)
+                print("its taking the pdf byte from database")
+                pdf = pdf_object.bytedata
+            except Pdfbyte.DoesNotExist:
+                pdf = pdfkit.from_url(page.url, False)
+                obj = Pdfbyte(name=filename, bytedata=pdf)
+                obj.save()
             response = HttpResponse(pdf, content_type='application/pdf')
             response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
             return response
